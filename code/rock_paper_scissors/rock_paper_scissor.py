@@ -19,12 +19,13 @@ def get_user_input() -> str:
     Returns:
         str: user input
     """
-    print("Please enter (r)ock, (p)aper, (s)cissors (any other key to quit)")
+    print("Please enter (R)ock, (P)aper, (S)cissors (any other key to quit)")
     user_input = input()
+    user_input = user_input.upper()
     # TODO: Can I made the input function require a literal (r/p/s)?
-    if user_input not in ['r', 'p', 's']:
+    if user_input not in ['R', 'P', 'S']:
         sys.exit()
-    if user_input == 'r' or user_input == 'p' or user_input == 's':
+    if user_input == 'R' or user_input == 'P' or user_input == 'S':
         return user_input
 
 
@@ -39,11 +40,11 @@ def randomly_generate_computer_input() -> str:
     """
     computer_input = random.randint(1, 3)
     if computer_input == 1:
-        return 'r'
+        return 'R'
     elif computer_input == 2:
-        return 'p'
+        return 'P'
     elif computer_input == 3:
-        return 's'
+        return 'S'
 
 
 def play_game() -> str:
@@ -60,23 +61,28 @@ def play_game() -> str:
     global WINS
     global LOSSES
     global TIES
+
+    user_input = user_input.upper()
+
     # Ties
     if user_input == computer_input:
         print('It is a tie!')
         TIES += 1
+
     # User wins
     elif (
-        (user_input == 'r' and computer_input == 's') or
-        (user_input == 'p' and computer_input == 'r') or
-        (user_input == 's' and randomly_generate_computer_input == 'r')
+        (user_input == 'R' and computer_input == 'S') or
+        (user_input == 'P' and computer_input == 'R') or
+        (user_input == 'S' and computer_input == 'R')
     ):
         print('You win!')
         WINS += 1
+
     # User loses
     elif(
-        (user_input == 's' and computer_input == 'r') or
-        (user_input == 'r' and computer_input == 'p') or
-        (user_input == 'r' and computer_input == 's')
+        (user_input == 'S' and computer_input == 'R') or
+        (user_input == 'R' and computer_input == 'P') or
+        (user_input == 'R' and computer_input == 'S')
     ):
         print('You lose!')
         LOSSES += 1
@@ -94,10 +100,10 @@ def scoreboard() -> dict:
     }
     return series_score
 
-    # Global variables
-    WINS : int = 0
-    LOSSES : int = 0
-    TIES : int = 0
+# Global variables
+WINS : int = 0
+LOSSES : int = 0
+TIES : int = 0
 
 while True:
     while True:
@@ -106,23 +112,24 @@ while True:
         print('Enter r, p, or s.')
 
     # Print to stdout
-    if user_input == 'r':
+    if user_input == 'R':
         print('ROCK versus...')
-    elif user_input == 'p':
+    elif user_input == 'P':
         print('PAPER versus...')
-    elif user_input == 's':
+    elif user_input == 'S':
         print('SCISSORS versus...')
     else:
-        print('Invalid input')
+        print('Invalid input; Exiting game.')
+        sys.exit()
 
     computer_input = randomly_generate_computer_input()
 
     # Print to stdout
-    if computer_input == 'r':
+    if computer_input == 'R':
         print('ROCK')
-    elif computer_input == 'p':
+    elif computer_input == 'P':
         print('PAPER')
-    elif computer_input == 's':
+    elif computer_input == 'S':
         print('SCISSORS')
 
     # Compare all possible outcomes
